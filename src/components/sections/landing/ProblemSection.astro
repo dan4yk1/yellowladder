@@ -1,0 +1,79 @@
+---
+// Problem section — left-aligned heading, then three columns, each with a
+// coloured eyebrow, a two-tone paragraph (dark lead — em-dash — grey rest), and
+// a pastel card holding a centred 40px accent-coloured icon. Multicolour kept
+// per design decision. Phosphor "fill" SVGs imported as native Astro components
+// (fill=currentColor, coloured by the `text-*` class).
+import MapPinIcon from "@/assets/icons/ph/map-pin.svg";
+import QuestionIcon from "@/assets/icons/ph/question.svg";
+import SpeedometerIcon from "@/assets/icons/ph/speedometer.svg";
+
+export interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+
+// `card` is the accent colour at ~16% alpha (#RRGGBB29). Literal classes kept
+// verbatim for the JIT scanner.
+const problems = [
+  {
+    eyebrow: "Invisible",
+    Icon: MapPinIcon,
+    color: "text-[#0098f2]",
+    card: "bg-[#0098f229]",
+    lead: "Customers search Google and AI for a pro",
+    rest: "— if you're not there, they call the contractor who is.",
+  },
+  {
+    eyebrow: "Outdated",
+    Icon: QuestionIcon,
+    color: "text-[#f200ca]",
+    card: "bg-[#f200ca29]",
+    lead: "A DIY or dated site makes you look risky",
+    rest: "— and homeowners scroll right past it.",
+  },
+  {
+    eyebrow: "No time",
+    Icon: SpeedometerIcon,
+    color: "text-[#6c56fc]",
+    card: "bg-[#6c56fc29]",
+    lead: "Building and maintaining a site eats hours",
+    rest: "— hours you'd rather spend billing real work.",
+  },
+];
+---
+
+<section class={`bg-white px-4 py-20 lg:py-28 ${className}`}>
+  <div class="mx-auto max-w-[1024px]">
+    <h2
+      class="max-w-[20ch] text-[32px] leading-[40px] font-semibold tracking-[-0.03em] text-[#1e1e1e] md:text-[40px] md:leading-[48px]"
+    >
+      Most contractors are losing jobs before the phone even rings
+    </h2>
+
+    <div class="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-3 lg:mt-20">
+      {
+        problems.map((p) => {
+          const ProblemIcon = p.Icon;
+          return (
+            <div class="flex flex-col">
+              <p class={`text-base font-semibold tracking-[-0.02em] ${p.color}`}>
+                {p.eyebrow}
+              </p>
+              <p class="mt-3 text-base leading-6 font-medium tracking-[-0.02em] text-[#1e1e1e]">
+                {p.lead}{" "}
+                <span class="text-[#8d8d8d]">{p.rest}</span>
+              </p>
+              <div
+                class={`mt-6 flex h-[156px] items-center justify-center rounded-[20px] ${p.card}`}
+              >
+                <ProblemIcon class={`size-10 ${p.color}`} />
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
