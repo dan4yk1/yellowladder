@@ -1,0 +1,36 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+// Primary CTA button — dark fill with Acctual's exact outline: a `0 0 0 1px
+// rgb(36,38,40)` shadow ring + a soft drop shadow. No CSS border (Acctual uses
+// none; a real border would add ~2px of layout height). Renders as <a> when
+// `href` is set, otherwise a <button>. Reused for sign-up style CTAs.
+export type Props = HTMLAttributes<"a"> & {
+  href?: string;
+  size?: "md" | "lg";
+};
+
+const { href, size = "md", class: className = "", ...rest } = Astro.props;
+
+const base =
+  "inline-flex items-center justify-center rounded-full bg-[#0d111b] text-base font-medium tracking-[-0.02em] text-white shadow-[0_0_0_1px_rgb(36,38,40),0_1px_2px_0_rgba(27,28,29,0.48)] transition-colors hover:bg-[#0d111b]/90";
+
+const sizes: Record<NonNullable<Props["size"]>, string> = {
+  md: "px-4 py-2",
+  lg: "px-4 py-3",
+};
+
+const classes = `${base} ${sizes[size]} ${className}`.trim();
+---
+
+{
+  href ? (
+    <a href={href} class={classes} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <button class={classes} {...rest}>
+      <slot />
+    </button>
+  )
+}
