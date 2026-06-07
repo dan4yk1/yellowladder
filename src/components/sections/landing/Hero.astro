@@ -1,0 +1,95 @@
+---
+import PrimaryButton from "@components/ui/PrimaryButton.astro";
+import Icon from "@components/ui/Icon.astro";
+import BrowserMockup from "@components/ui/BrowserMockup.astro";
+import { navCtas } from "@utils/navigation";
+
+// Hero — centered column, max-width 1024px, large top padding, 64px gap between
+// the text block and the visual. Typography mirrors permitclerk (Open Runde):
+//   headline 64/72 (40/48 mobile, 56/64 tablet), weight 600, -0.03em, #1e1e1e
+//   subtext  16/24, weight 500, -0.02em, #8d8d8d
+export interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+
+const badges = ["Built & hosted for you", "Found on Google & AI", "No DIY headaches"];
+---
+
+<section class={`relative overflow-hidden bg-[#fafafa] ${className}`}>
+  <div
+    class="relative mx-auto flex max-w-[1024px] flex-col items-center gap-16 px-4 pt-[136px] lg:pt-[168px]"
+  >
+    {/* Text + CTA */}
+    <div class="flex flex-col items-center">
+      {/* Status eyebrow pill — single segment, pulsing "live" dot, no numbers */}
+      <span
+        class="mb-6 inline-flex items-center gap-2 rounded-full bg-brand/10 px-3.5 py-1.5 text-sm font-medium tracking-[-0.02em] text-brand-ink"
+      >
+        <span class="relative flex size-2 shrink-0">
+          <span
+            class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75 motion-reduce:hidden"
+          ></span>
+          <span class="relative inline-flex size-2 rounded-full bg-emerald-500"></span>
+        </span>
+        Now onboarding new contractors
+      </span>
+
+      <h1
+        class="max-w-[15ch] text-center text-[40px] leading-[48px] font-semibold tracking-[-0.03em] text-[#1e1e1e] sm:text-[56px] sm:leading-[64px] lg:text-[64px] lg:leading-[72px]"
+      >
+        Websites that book contractors more jobs
+      </h1>
+
+      <p
+        class="mt-5 max-w-xl text-center text-base leading-6 font-medium tracking-[-0.02em] text-[#8d8d8d]"
+      >
+        We design, build, and host a fast, modern website for your trade &mdash;
+        optimized to get you found on Google and AI search. You run your
+        business; we handle the website.
+      </p>
+
+      <PrimaryButton href={navCtas.signup.href} size="lg" class="mt-10">
+        Get your website
+      </PrimaryButton>
+
+      <a
+        href="/#how-it-works"
+        class="mt-4 inline-flex items-center gap-1 text-sm font-medium tracking-[-0.02em] text-gray-500 transition-colors hover:text-ink"
+      >
+        see how it works
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+
+      {/* Trust badges — muted text, brand-yellow checks with dark glyph */}
+      <ul
+        class="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-base font-medium tracking-[-0.02em] text-gray-600"
+      >
+        {
+          badges.map((badge) => (
+            <li class="inline-flex items-center gap-2">
+              <span class="flex size-5 items-center justify-center rounded-full bg-brand text-ink">
+                <Icon name="check" class="size-3" />
+              </span>
+              {badge}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    {/* Hero visual — single centered browser mockup, rise+fade on load */}
+    <div class="w-full max-w-[560px]">
+      <div class="animate-card-in motion-reduce:animate-none">
+        <BrowserMockup />
+      </div>
+    </div>
+  </div>
+
+  {/* Fade the bottom of the hero into the white section below */}
+  <div
+    class="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-b from-transparent to-white"
+  >
+  </div>
+</section>
