@@ -1,0 +1,94 @@
+---
+// "How it works" — left-aligned two-line heading, a two-tone subhead, then a
+// 3×2 card grid. Top row = the three steps; bottom row = supporting perks. Each
+// card is a grey tile with a small accent glyph in a white pill + a short label.
+// Phosphor "fill" SVGs imported as native Astro components (fill=currentColor).
+import ClipboardTextIcon from "@/assets/icons/ph/clipboard-text.svg";
+import StackIcon from "@/assets/icons/ph/stack.svg";
+import PaperPlaneTiltIcon from "@/assets/icons/ph/paper-plane-tilt.svg";
+import MapPinIcon from "@/assets/icons/ph/map-pin.svg";
+import ShieldCheckIcon from "@/assets/icons/ph/shield-check.svg";
+import HandshakeIcon from "@/assets/icons/ph/handshake.svg";
+
+export interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+
+// `color` is a literal Tailwind text-colour class (kept verbatim for the JIT
+// scanner); the SVG fill is `currentColor`. Top row = steps; bottom row = perks.
+const cards = [
+  {
+    Icon: ClipboardTextIcon,
+    color: "text-[#0098f2]",
+    label: "Tell us about your business",
+  },
+  {
+    Icon: StackIcon,
+    color: "text-[#6c56fc]",
+    label: "We design & build your site",
+  },
+  {
+    Icon: PaperPlaneTiltIcon,
+    color: "text-[#00b86b]",
+    label: "We launch it for you",
+  },
+  {
+    Icon: MapPinIcon,
+    color: "text-[#f200ca]",
+    label: "Optimized for Google & AI search",
+  },
+  {
+    Icon: ShieldCheckIcon,
+    color: "text-[#f59e0b]",
+    label: "Fast, secure Cloudflare hosting",
+  },
+  {
+    Icon: HandshakeIcon,
+    color: "text-[#06b6d4]",
+    label: "Custom features built to your needs",
+  },
+];
+---
+
+<section
+  id="how-it-works"
+  class={`scroll-mt-24 bg-white px-4 py-20 lg:py-28 ${className}`}
+>
+  <div class="mx-auto max-w-[1024px]">
+    <h2
+      class="max-w-[20ch] text-[32px] leading-[40px] font-semibold tracking-[-0.03em] text-[#1e1e1e] md:text-[40px] md:leading-[48px]"
+    >
+      A website handled for you.<br class="hidden sm:inline" /> From build to bookings.
+    </h2>
+
+    <p
+      class="mt-5 max-w-[52ch] text-base leading-6 font-medium tracking-[-0.02em] text-[#1e1e1e]"
+    >
+      Tell us about your business and we take it from there.{" "}
+      <span class="text-[#8d8d8d]">
+        We design, build, optimize, and host the whole thing &mdash; then keep
+        it running so you never have to touch it.
+      </span>
+    </p>
+
+    <div class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
+      {
+        cards.map((c) => {
+          const CardIcon = c.Icon;
+          return (
+            <article class="flex flex-col items-start gap-[18px] rounded-[20px] bg-[#fafafa] p-6">
+              <span class="flex size-10 items-center justify-center rounded-full bg-white shadow-[0_2.5px_2.5px_#0000000f]">
+                <CardIcon class={`size-[21px] ${c.color}`} />
+              </span>
+              <p class="max-w-[16ch] text-base leading-6 font-medium tracking-[-0.02em] text-[#1e1e1e]">
+                {c.label}
+              </p>
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
