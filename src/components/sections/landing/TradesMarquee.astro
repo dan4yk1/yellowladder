@@ -1,0 +1,42 @@
+---
+// Infinite marquee of the trades YellowLadder builds for, as pills. Reuses the
+// `--animate-marquee` keyframe: the track holds two identical copies of the
+// list, so translating -50% scrolls exactly one copy seamlessly. Pauses on
+// hover; disabled under prefers-reduced-motion. Edge-fade mask on both sides.
+const trades = [
+  "Electricians",
+  "Plumbers",
+  "HVAC",
+  "Roofers",
+  "Remodelers",
+  "Concrete",
+  "Landscapers",
+  "Painters",
+  "General Contractors",
+  "Pool & Spa",
+  "Fencing",
+  "Flooring",
+];
+---
+
+<section class="relative overflow-hidden bg-white pt-24 pb-8">
+  <p class="text-center text-base font-medium tracking-[-0.02em] text-[#8d8d8d]">
+    Built for the trades that run on referrals and repeat work
+  </p>
+
+  <div
+    class="group relative mt-8 py-3 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+  >
+    <div
+      class="flex w-max items-center animate-marquee group-hover:[animation-play-state:paused] motion-reduce:animate-none"
+    >
+      {
+        [...trades, ...trades].map((trade) => (
+          <span class="mx-3 flex-shrink-0 rounded-full bg-[#fafafa] px-5 py-2.5 text-base font-medium tracking-[-0.02em] text-[#1e1e1e] ring-1 ring-black/[0.05]">
+            {trade}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</section>
