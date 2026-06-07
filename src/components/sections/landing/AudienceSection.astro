@@ -1,0 +1,148 @@
+---
+// "Who it's for" — six trade cards (3×2) + a full-width catch-all card. Each
+// icon takes a distinct brand colour (multicolour glyphs kept per design
+// decision). Icons are Phosphor "fill" SVGs imported as native Astro
+// components (fill=currentColor, coloured by the `text-*` class).
+import Icon from "@components/ui/Icon.astro";
+import LightningIcon from "@/assets/icons/ph/lightning.svg";
+import DropIcon from "@/assets/icons/ph/drop.svg";
+import SnowflakeIcon from "@/assets/icons/ph/snowflake.svg";
+import HouseLineIcon from "@/assets/icons/ph/house-line.svg";
+import SolarPanelIcon from "@/assets/icons/ph/solar-panel.svg";
+import HardHatIcon from "@/assets/icons/ph/hard-hat.svg";
+import HashStraightIcon from "@/assets/icons/ph/hash-straight.svg";
+
+export interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+
+// `color` is a literal Tailwind text-colour class (kept verbatim for the JIT
+// scanner); the SVG fill is `currentColor`, so it colours the glyph.
+const audiences = [
+  {
+    Icon: LightningIcon,
+    color: "text-[#f59e0b]",
+    title: "Electricians",
+    features: [
+      "Service-area pages",
+      "Click-to-call",
+      "Emergency call-out banners",
+      "Review showcase",
+    ],
+  },
+  {
+    Icon: DropIcon,
+    color: "text-[#0098f2]",
+    title: "Plumbers",
+    features: [
+      "Booking & quote forms",
+      "Service menus",
+      "24/7 call-out CTA",
+      "Local SEO pages",
+    ],
+  },
+  {
+    Icon: SnowflakeIcon,
+    color: "text-[#06b6d4]",
+    title: "HVAC",
+    features: [
+      "Seasonal promos",
+      "Financing call-outs",
+      "Maintenance plans",
+      "Click-to-call",
+    ],
+  },
+  {
+    Icon: HouseLineIcon,
+    color: "text-[#64748b]",
+    title: "Roofers",
+    features: [
+      "Project galleries",
+      "Free-inspection forms",
+      "Storm-response pages",
+      "Financing info",
+    ],
+  },
+  {
+    Icon: HardHatIcon,
+    color: "text-[#00b86b]",
+    title: "Remodelers & GCs",
+    features: [
+      "Portfolio galleries",
+      "Before / after sliders",
+      "Lead capture",
+      "Trust badges",
+    ],
+  },
+  {
+    Icon: SolarPanelIcon,
+    color: "text-[#f5b50a]",
+    title: "Solar & specialty",
+    features: [
+      "Savings calculators",
+      "Incentive info",
+      "Quote requests",
+      "Reviews",
+    ],
+  },
+  {
+    Icon: HashStraightIcon,
+    color: "text-gray-400",
+    title: "Don't see your trade?",
+    body: "We build for every contractor — tell us about your business and we'll tailor the site to how you win work.",
+    catchAll: true,
+  },
+];
+---
+
+<section id="audience" class={`scroll-mt-24 bg-white px-4 py-20 lg:py-28 ${className}`}>
+  <div class="mx-auto max-w-[1024px]">
+    <p class="text-center text-base font-semibold tracking-[-0.02em] text-brand-ink">
+      Who it's for
+    </p>
+
+    <h2
+      class="mx-auto mt-4 max-w-[18ch] text-center text-[32px] leading-[40px] font-semibold tracking-[-0.03em] text-[#1e1e1e] md:text-[40px] md:leading-[48px]"
+    >
+      Made for contractors who&rsquo;d rather be on the job than building a website
+    </h2>
+
+    <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        audiences.map((a) => {
+          const TradeIcon = a.Icon;
+          return (
+            <article
+              class={`flex flex-col gap-[18px] rounded-[20px] bg-[#fafafa] p-6 ${a.catchAll ? "sm:col-span-2 lg:col-span-3" : ""}`}
+            >
+              <div class="flex items-center gap-2.5">
+                <TradeIcon class={`size-6 shrink-0 ${a.color}`} />
+                <h3
+                  class={`text-[20px] leading-7 font-semibold tracking-[-0.03em] ${a.catchAll ? "text-gray-500" : "text-[#1e1e1e]"}`}
+                >
+                  {a.title}
+                </h3>
+              </div>
+              {a.features ? (
+                <ul class="flex flex-col gap-2.5">
+                  {a.features.map((feature) => (
+                    <li class="flex items-center gap-2 text-base font-medium tracking-[-0.02em] text-[#1e1e1e]">
+                      <Icon name="check" class={`size-4 shrink-0 ${a.color}`} />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="text-base leading-6 font-medium tracking-[-0.02em] text-[#8d8d8d]">
+                  {a.body}
+                </p>
+              )}
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
