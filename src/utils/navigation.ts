@@ -1,63 +1,19 @@
 // ─── Navigation Data ────────────────────────────────────────────────────────
-// Centralized navigation data used by Navbar, Footer, and other components.
-// TODO: Update links and labels for your project.
+// Centralized navigation data used by the Navbar. Flat links only (the landing
+// page scrolls to in-page section anchors); no mega-menus this pass.
 
 export interface NavLink {
   label: string;
   href: string;
 }
 
-export interface FooterSection {
-  title: string;
-  links: NavLink[];
-}
-
-export interface SocialLinks {
-  twitter?: string;
-  github?: string;
-  linkedin?: string;
-  instagram?: string;
-  youtube?: string;
-}
-
-// ─── Navbar Links ───────────────────────────────────────────────────────────
-
-export const navBarLinks: NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
+export const navItems: NavLink[] = [
+  { label: "How it works", href: "/#how-it-works" },
+  { label: "Who it's for", href: "/#audience" },
+  { label: "Contact", href: "/#contact" },
 ];
 
-// ─── Footer Links ───────────────────────────────────────────────────────────
-
-export const footerLinks: FooterSection[] = [
-  {
-    title: "Product",
-    links: [
-      { label: "Features", href: "/#features" },
-      { label: "Pricing", href: "/pricing" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms of Service", href: "/terms" },
-    ],
-  },
-];
-
-// ─── Social Links ───────────────────────────────────────────────────────────
-
-export const socialLinks: SocialLinks = {
-  twitter: "https://twitter.com/yourhandle", // TODO: Replace
-  github: "https://github.com/yourhandle", // TODO: Replace
-  linkedin: "https://linkedin.com/company/yourcompany", // TODO: Replace
-};
+// Single primary CTA on the right side of the navbar.
+export const navCtas = {
+  signup: { label: "Get started", href: "/#contact" },
+} as const;

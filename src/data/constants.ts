@@ -1,21 +1,21 @@
 // ─── Site Configuration ─────────────────────────────────────────────────────
 // Single source of truth for all site-wide metadata and SEO defaults.
-// TODO: Replace all placeholder values before launch.
 
 export const SITE = {
-  title: "My Website",
-  tagline: "A modern web experience",
+  title: "YellowLadder",
+  tagline: "Websites that book contractors more jobs.",
   description:
-    "TODO: Write a compelling site description for SEO (150-160 characters).",
-  url: "https://example.com", // TODO: Replace with production URL (no trailing slash)
-  author: "Your Name", // TODO: Replace with author name
-  titleTemplate: "%s | My Website", // %s is replaced with the page title
-  twitterHandle: "@yourhandle", // TODO: Replace with Twitter/X handle
-  themeColor: "#ffffff", // TODO: Set brand theme color
+    "YellowLadder designs, builds, and hosts fast, modern websites for construction contractors — optimized to get you found on Google and AI search.",
+  url: "https://yellowladder.ai", // production URL (no trailing slash)
+  author: "YellowLadder",
+  email: "hello@yellowladder.ai",
+  titleTemplate: "%s | YellowLadder", // %s is replaced with the page title
+  twitterHandle: "@yellowladder", // TODO: confirm handle
+  themeColor: "#fafafa", // brand page background
   organization: {
-    name: "Your Organization", // TODO: Replace with organization name
-    url: "https://example.com",
-    logo: "/logo.svg", // TODO: Add logo to public/
+    name: "YellowLadder",
+    url: "https://yellowladder.ai",
+    logo: "/yellowladder.svg",
   },
 } as const;
 
@@ -24,8 +24,8 @@ export const SITE = {
 export const OG = {
   locale: "en_US",
   type: "website",
-  image: "/og-default.jpg", // TODO: Add default OG image to public/ (1200x630)
-  imageAlt: "TODO: Describe your default OG image",
+  image: "/og-default.jpg", // TODO: add default OG image to public/ (1200x630)
+  imageAlt: "YellowLadder — websites for contractors",
 } as const;
 
 // ─── Default SEO Structured Data ────────────────────────────────────────────
