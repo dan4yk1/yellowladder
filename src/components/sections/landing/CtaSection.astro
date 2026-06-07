@@ -1,0 +1,39 @@
+---
+import PrimaryButton from "@components/ui/PrimaryButton.astro";
+import { SITE } from "@data/constants";
+
+// Closing CTA band above the footer. Anchor target for "Get started" / nav
+// "Contact". The button is a mailto so the static site needs no backend yet.
+export interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<section id="contact" class={`scroll-mt-24 bg-white px-4 pt-10 pb-24 ${className}`}>
+  <div
+    class="mx-auto max-w-[1024px] overflow-hidden rounded-[32px] bg-ink px-6 py-16 text-center sm:py-20"
+  >
+    <h2
+      class="mx-auto max-w-[20ch] text-[32px] leading-[40px] font-semibold tracking-[-0.03em] text-white md:text-[40px] md:leading-[48px]"
+    >
+      Ready for a website that brings in work?
+    </h2>
+    <p
+      class="mx-auto mt-4 max-w-[48ch] text-base leading-6 font-medium tracking-[-0.02em] text-white/60"
+    >
+      Tell us about your business and we&rsquo;ll get your site live &mdash;
+      designed, optimized, and hosted, with nothing for you to manage.
+    </p>
+
+    {/* Brand-yellow CTA for contrast against the dark band */}
+    <PrimaryButton
+      href={`mailto:${SITE.email}`}
+      size="lg"
+      class="mt-8 !bg-brand !text-ink !shadow-none hover:!bg-brand/90"
+    >
+      Get your website
+    </PrimaryButton>
+  </div>
+</section>
