@@ -1,0 +1,45 @@
+---
+// Single testimonial card: five amber stars, a large Open Runde quote, and a
+// handwritten Caveat attribution. Sits on the white page background.
+//
+// NOTE: placeholder testimonial — swap for a real, attributable quote before
+// launch (fabricated reviews are a trust/legal risk). TODO: replace.
+const stars = Array.from({ length: 5 });
+---
+
+<section class="bg-white px-4 py-20">
+  <div
+    class="mx-auto max-w-5xl rounded-[32px] bg-[#f6f6f7] px-6 py-16 text-center sm:py-20"
+  >
+    {/* Stars */}
+    <div class="flex justify-center gap-1.5 text-[#e8740c]">
+      {
+        stars.map(() => (
+          <svg viewBox="0 0 24 24" class="size-7" aria-hidden="true">
+            <path
+              d="M12 2 15.1 7.8 21.5 8.9 17 13.6 17.9 20.1 12 17.2 6.1 20.1 7 13.6 2.5 8.9 8.9 7.8Z"
+              fill="currentColor"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linejoin="round"
+            />
+          </svg>
+        ))
+      }
+      <span class="sr-only">Rated 5 out of 5 stars</span>
+    </div>
+
+    {/* Quote — TODO: replace with a real testimonial */}
+    <blockquote
+      class="mx-auto mt-7 max-w-[42rem] text-[26px] leading-[1.25] font-semibold tracking-[-0.02em] text-[#1e1e1e] sm:text-[32px]"
+    >
+      &ldquo;I run a roofing crew, not a marketing team. YellowLadder built our
+      site, got us on Google, and the calls started coming.&rdquo;
+    </blockquote>
+
+    {/* Attribution — TODO: replace */}
+    <p class="mt-8 font-script text-2xl font-semibold text-[#8d8d8d]">
+      Marcus Rivera, owner of Rivera Roofing
+    </p>
+  </div>
+</section>
