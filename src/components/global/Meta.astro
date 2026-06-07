@@ -1,0 +1,131 @@
+---
+import { SEO } from "astro-seo";
+import { SITE, OG, SEO_CONFIG } from "@data/constants";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+  nofollow?: boolean;
+  ogType?: "website" | "article";
+  ogImage?: string;
+  ogImageAlt?: string;
+  articleDatePublished?: string;
+  articleDateModified?: string;
+  articleAuthor?: string;
+  languageAlternates?: { href: string; hrefLang: string }[];
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description = SITE.description,
+  noindex = false,
+  nofollow = false,
+  ogType = "website",
+  ogImage = OG.image,
+  ogImageAlt = OG.imageAlt,
+  articleDatePublished,
+  articleDateModified,
+  articleAuthor = SITE.author,
+  languageAlternates = [],
+  structuredData,
+} = Astro.props;
+
+const pageTitle = title ? SITE.titleTemplate.replace("%s", title) : SITE.title;
+const canonicalUrl = new URL(Astro.url.pathname, SITE.url).href;
+const ogImageUrl = ogImage.startsWith("http")
+  ? ogImage
+  : new URL(ogImage, SITE.url).href;
+
+// Build structured data array
+const schemas: Record<string, unknown>[] = [
+  // Default Organization schema
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE.organization.name,
+    url: SITE.organization.url,
+    logo: `${SITE.url}${SITE.organization.logo}`,
+  },
+  // Default WebSite schema
+  SEO_CONFIG.defaultSchema,
+];
+
+// Add any page-specific structured data
+if (structuredData) {
+  if (Array.isArray(structuredData)) {
+    schemas.push(...structuredData);
+  } else {
+    schemas.push(structuredData);
+  }
+}
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content={Astro.generator} />
+
+{/* Favicons */}
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+{/* Theme color */}
+<meta name="theme-color" content={SITE.themeColor} />
+
+{/* Sitemap */}
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+{/* Canonical */}
+<link rel="canonical" href={canonicalUrl} />
+
+{/* Language alternates */}
+{languageAlternates.map((alt) => (
+  <link rel="alternate" href={alt.href} hreflang={alt.hrefLang} />
+))}
+
+<SEO
+  title={pageTitle}
+  description={description}
+  noindex={noindex}
+  nofollow={nofollow}
+  openGraph={{
+    basic: {
+      title: title ?? SITE.title,
+      type: ogType,
+      image: ogImageUrl,
+    },
+    optional: {
+      description,
+      locale: OG.locale,
+      siteName: SITE.title,
+    },
+    image: {
+      alt: ogImageAlt,
+    },
+    ...(ogType === "article" && articleDatePublished
+      ? {
+          article: {
+            publishedTime: articleDatePublished,
+            modifiedTime: articleDateModified ?? articleDatePublished,
+            authors: [articleAuthor],
+          },
+        }
+      : {}),
+  }}
+  twitter={{
+    card: "summary_large_image",
+    site: SITE.twitterHandle,
+    creator: SITE.twitterHandle,
+    title: title ?? SITE.title,
+    description,
+    image: ogImageUrl,
+    imageAlt: ogImageAlt,
+  }}
+/>
+
+{/* JSON-LD Structured Data */}
+{schemas.map((schema) => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}

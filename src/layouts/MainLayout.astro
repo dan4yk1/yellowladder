@@ -1,0 +1,35 @@
+---
+import Meta from "@components/global/Meta.astro";
+import "@styles/global.css";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+  nofollow?: boolean;
+  ogType?: "website" | "article";
+  ogImage?: string;
+  ogImageAlt?: string;
+  articleDatePublished?: string;
+  articleDateModified?: string;
+  articleAuthor?: string;
+  languageAlternates?: { href: string; hrefLang: string }[];
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { ...metaProps } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Meta {...metaProps} />
+  </head>
+  <body>
+    {/* <Navbar /> */}
+    <main>
+      <slot />
+    </main>
+    {/* <Footer /> */}
+  </body>
+</html>
