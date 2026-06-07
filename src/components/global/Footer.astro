@@ -1,0 +1,79 @@
+---
+import Logo from "@components/ui/Logo.astro";
+import { SITE } from "@data/constants";
+
+// Light footer matching the permitclerk aesthetic (hairline top border, grey
+// body text). Link columns use in-page anchors; contact is a mailto.
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    title: "Services",
+    links: [
+      { label: "Website design", href: "/#how-it-works" },
+      { label: "Hosting & care", href: "/#how-it-works" },
+      { label: "GEO optimization", href: "/#how-it-works" },
+      { label: "Custom builds", href: "/#contact" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "Who it's for", href: "/#audience" },
+      { label: "How it works", href: "/#how-it-works" },
+      { label: "Contact", href: "/#contact" },
+    ],
+  },
+];
+---
+
+<footer class="border-t border-black/[0.06] bg-white px-4 py-16">
+  <div class="mx-auto grid max-w-[1024px] gap-10 sm:grid-cols-2 lg:grid-cols-4">
+    {/* Brand blurb */}
+    <div class="lg:col-span-2">
+      <Logo class="h-7 w-auto" />
+      <p
+        class="mt-4 max-w-xs text-base leading-6 font-medium tracking-[-0.02em] text-[#8d8d8d]"
+      >
+        Websites, hosting, and AI-search optimization for construction
+        contractors. You run the business; we handle the website.
+      </p>
+      <a
+        href={`mailto:${SITE.email}`}
+        class="mt-4 inline-block text-base font-medium tracking-[-0.02em] text-[#1e1e1e] transition-colors hover:text-brand-ink"
+      >
+        {SITE.email}
+      </a>
+    </div>
+
+    {/* Link columns */}
+    {
+      columns.map((col) => (
+        <div>
+          <p class="text-sm font-semibold tracking-[-0.01em] text-[#1e1e1e]">
+            {col.title}
+          </p>
+          <ul class="mt-4 flex flex-col gap-2.5">
+            {col.links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-base font-medium tracking-[-0.02em] text-[#8d8d8d] transition-colors hover:text-[#1e1e1e]"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  <div
+    class="mx-auto mt-12 flex max-w-[1024px] items-center justify-between border-t border-black/[0.06] pt-6 text-sm font-medium text-gray-400"
+  >
+    <span>&copy; {year} {SITE.title}</span>
+    <span>Built for contractors.</span>
+  </div>
+</footer>

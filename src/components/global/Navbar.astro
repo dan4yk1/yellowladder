@@ -1,0 +1,128 @@
+---
+import Logo from "@components/ui/Logo.astro";
+import Icon from "@components/ui/Icon.astro";
+import PrimaryButton from "@components/ui/PrimaryButton.astro";
+import { navItems, navCtas } from "@utils/navigation";
+
+// Floating-pill navbar. Fixed, transparent band; the white pill floats over any
+// section colour. Desktop shows inline flat links; mobile collapses to a
+// hamburger drawer (small vanilla script at the bottom).
+export interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<header class={`fixed inset-x-0 top-0 z-50 ${className}`}>
+  <div class="mx-auto max-w-[1104px] px-4 pt-4">
+    <div
+      class="flex items-center justify-between gap-4 rounded-full bg-white/90 py-2 pr-2 pl-5 shadow-[0px_0px_0.34px_0.34px_rgba(30,45,82,0.06),0.34px_0.34px_0.34px_0px_rgba(30,45,82,0.2)] backdrop-blur-md"
+    >
+      {/* Left: logo + desktop links */}
+      <div class="flex items-center">
+        <a
+          href="/"
+          aria-label="YellowLadder home"
+          class="flex shrink-0 items-center"
+        >
+          <Logo class="h-7 w-auto" />
+        </a>
+
+        <nav aria-label="Main navigation">
+          <ul class="ml-6 hidden items-center gap-0.5 lg:flex">
+            {
+              navItems.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class="rounded-full px-3 py-2 text-base font-medium tracking-[-0.02em] text-[#1e1e1e] transition-colors hover:bg-black/[0.04] hover:text-ink"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+
+      {/* Right: desktop CTA + mobile toggle */}
+      <div class="flex items-center gap-2">
+        <PrimaryButton href={navCtas.signup.href} class="max-lg:hidden">
+          {navCtas.signup.label}
+        </PrimaryButton>
+
+        <button
+          type="button"
+          data-mobile-toggle
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Toggle menu"
+          class="flex size-10 items-center justify-center rounded-full text-ink transition-colors hover:bg-black/[0.04] lg:hidden"
+        >
+          <span data-menu-open><Icon name="menu" class="size-6" /></span>
+          <span data-menu-close hidden><Icon name="x" class="size-6" /></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {/* Mobile drawer */}
+  <div id="mobile-menu" data-mobile-menu hidden class="lg:hidden">
+    <div class="mx-auto max-w-6xl px-4 pt-2">
+      <div
+        class="rounded-2xl bg-white p-3 shadow-[0_12px_40px_rgba(0,0,0,0.10)] ring-1 ring-black/[0.06]"
+      >
+        <nav aria-label="Mobile navigation" class="flex flex-col">
+          {
+            navItems.map((item) => (
+              <a
+                href={item.href}
+                class="rounded-xl px-3 py-3 text-base font-medium tracking-[-0.02em] text-gray-800 transition-colors hover:bg-black/[0.04]"
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+
+        <div class="my-3 h-px bg-black/[0.06]"></div>
+
+        <PrimaryButton href={navCtas.signup.href} size="lg" class="w-full">
+          {navCtas.signup.label}
+        </PrimaryButton>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>(
+    "[data-mobile-toggle]",
+  );
+  const menu = document.querySelector<HTMLElement>("[data-mobile-menu]");
+  const openIcon = toggle?.querySelector<HTMLElement>("[data-menu-open]");
+  const closeIcon = toggle?.querySelector<HTMLElement>("[data-menu-close]");
+
+  function setMenu(open: boolean) {
+    if (!menu || !toggle) return;
+    menu.toggleAttribute("hidden", !open);
+    toggle.setAttribute("aria-expanded", String(open));
+    openIcon?.toggleAttribute("hidden", open);
+    closeIcon?.toggleAttribute("hidden", !open);
+  }
+
+  toggle?.addEventListener("click", () => {
+    setMenu(menu?.hasAttribute("hidden") ?? false);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setMenu(false);
+  });
+  window
+    .matchMedia("(min-width: 1024px)")
+    .addEventListener("change", (e) => {
+      if (e.matches) setMenu(false);
+    });
+</script>

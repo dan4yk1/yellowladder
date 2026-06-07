@@ -1,5 +1,8 @@
 ---
+import { Font } from "astro:assets";
 import Meta from "@components/global/Meta.astro";
+import Navbar from "@components/global/Navbar.astro";
+import Footer from "@components/global/Footer.astro";
 import "@styles/global.css";
 
 export interface Props {
@@ -24,12 +27,13 @@ const { ...metaProps } = Astro.props;
 <html lang="en">
   <head>
     <Meta {...metaProps} />
+    <Font cssVariable="--font-caveat" preload />
   </head>
-  <body>
-    {/* <Navbar /> */}
+  <body class="min-h-screen bg-white text-ink antialiased">
+    <Navbar />
     <main>
       <slot />
     </main>
-    {/* <Footer /> */}
+    <Footer />
   </body>
 </html>
