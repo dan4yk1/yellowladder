@@ -35,7 +35,11 @@ export default defineConfig({
     domains: ["images.unsplash.com"],
   },
 
-  integrations: [sitemap(), mdx(), icon(), playformCompress()],
+  // CSS: false — let Vite minify CSS. @playform/compress defaults to the csso
+  // minifier, which silently drops Tailwind v4 range media queries
+  // (`@media (width >= 48rem)`), stripping every breakpoint and forcing the
+  // mobile layout on desktop in production builds only.
+  integrations: [sitemap(), mdx(), icon(), playformCompress({ CSS: false })],
 
   vite: {
     plugins: [tailwindcss()]
